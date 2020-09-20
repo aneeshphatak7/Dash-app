@@ -11,25 +11,19 @@ server=app.server
 
 # assume you have a "long-form" data frame
 # see https://plotly.com/python/px-arguments/ for more options
-df = pd.DataFrame({
-    "Fruit": ["Apples", "Oranges", "Bananas", "Apples", "Oranges", "Bananas"],
-    "Amount": [4, 1, 2, 2, 4, 5],
-    "City": ["SF", "SF", "SF", "Montreal", "Montreal", "Montreal"]
-})
 
-fig = px.bar(df, x="Fruit", y="Amount", color="City", barmode="group")
 
-app.layout = html.Div(children=[
-    html.H1(children='Hello Dash'),
-
-    html.Div(children='''
-        Dash: A web application framework for Python.
-    '''),
-
-    dcc.Graph(
-        id='example-graph',
-        figure=fig
+app.layout = html.Div([
+    html.Label('Choose min support'),
+    dcc.RangeSlider(
+        min=0.101,
+        max=0.709,
+        step=0.03,
+        value=[0.101,0.709],
+        marks={i for i in range(0.101,0.709)}
     )
+   
+    
 ])
 
 if __name__ == '__main__':
