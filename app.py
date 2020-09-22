@@ -47,53 +47,53 @@ server = app.server
 
 
 app.layout = html.Div(children=[
-    html.H1('Change following parameters to observe changes in top rules and plot',style=dict(color='Orange',align='center',justify='center')),
+    html.H1('Change value of following parameters to observe changes in top rules and plot ',style=dict(color='Orange',align='center',justify='center')),
      html.Br([]),
      html.Br([]),
 
    html.Div([ html.Div(children='''
-        Min Confidence:     
+        Least Confidence:     
     ''',
-    style={'width':'10%','display': 'inline-block'
+    style={'color': 'blue','width':'10%','display': 'inline-block'
             }),
     html.Div(children='''
-        Min Support:     
+        Least Support:     
     ''',
-    style={'width':'10%','display': 'inline-block'
+    style={'color': 'blue','width':'10%','display': 'inline-block'
             }),
     html.Div(children='''
-        Min Lift:     
+        Least Lift:     
     ''',
-    style={'width':'10%','display': 'inline-block'
+    style={'color': 'blue','width':'10%','display': 'inline-block'
             }),
     html.Div(children='''
-        Consequents:     
+        Attrition=:     
     ''',
-    style={'width':'10%','display': 'inline-block'
+    style={'color': 'blue','width':'10%','display': 'inline-block'
             }),
     html.Div(children='''
-        Max_length:     
+        max length for rules:     
     ''',
-    style={'width':'10%','display': 'inline-block'
+    style={'color': 'blue','width':'10%','display': 'inline-block'
             }),
     html.Div(children='''
-        Sort_by:     
+        Sort according to:     
     ''',
-    style={'width':'10%','display': 'inline-block'
+    style={'color': 'blue','width':'10%','display': 'inline-block'
             }),
  
  html.Div([
 dcc.Input(
     placeholder='Enter Confidence: ',
     type='number',
-    value=0.7,
+    value=0.6,
     id = 'confidence',style={'width':'10%','display': 'inline-block'
             }
 ) ,
 dcc.Input(
     placeholder='Enter Support',
     type='number',
-    value=0.4,
+    value=0.2,
     id = 'support',style={'width':'10%','display': 'inline-block'
             }
 ) ,
@@ -106,7 +106,6 @@ dcc.Input(
             }
 ) ,        
 dcc.Dropdown(
-    placeholder='Enter Consequent',
     options = [
         {'label':'No','value':'Attrition=No'},{'label':'Yes','value':'Attrition=Yes'}],
     value='Attrition=No',
@@ -134,7 +133,7 @@ dcc.Dropdown(
     ]),
       
 html.Div(id="table1"),]),
-html.H3("Scatterplot for custom rules ",style=dict(color='Orange',align='center',justify='center')),
+html.H3("Scatterplot for custom rules ",style=dict(color='Blue')),
         html.Div(id='graphs'),
 
 ])
@@ -151,7 +150,7 @@ html.H3("Scatterplot for custom rules ",style=dict(color='Orange',align='center'
     State(component_id='Sort_by', component_property='value'),
      ]
 )
-def update_datatable(n_clicksx,confidence,support,lift,rules,Consequent,Sort_by):
+def update_datatable(n_clicks,confidence,support,lift,rules,Consequent,Sort_by):
 
     y=SupervisedApriori(df,consequent = Consequent, min_supp=support, min_conf=confidence, min_lift=lift,max_length=rules,sort_by=Sort_by)
     
@@ -166,14 +165,14 @@ def update_datatable(n_clicksx,confidence,support,lift,rules,Consequent,Sort_by)
     
     print("++++++++++++++++++++++++++++++++++++++")
     print(sup_rules.to_dict("rows"))
-    tab=html.Div(children=[html.Br([]),html.Label(children='Top 5 rules', style={'width': '60%', 'display': 'inline-block',
-                                                                 'margin': 0, 'padding': '10px','color':'blue'}),
+    tab=html.Div(children=[html.Br([]),html.Label(children='Listed below are the best 5 rules according to input ', style=
+                                                  {'fontSize' : 14,'width': '100%' ,'margin': 0, 'padding': '10px','color':'orange'}),
             dash_table.DataTable(
                     id='table',
                     columns=[{"name": i, "id": i} for i in sup_rules.columns],
                     data=sup_rules.to_dict("rows"),
-                    style_cell={'width': '250px',
-                    'height': '70px',
+                    style_cell={'color':'lightblue','width': '200px',
+                    'height': '20px',
                     'textAlign': 'left'})
                     ])
     return tab
@@ -198,7 +197,7 @@ def update_graph(nclick,confidence,support,lift,rules,Consequent,Sort_by):
     rules=SupervisedApriori(df,consequent = Consequent,min_supp=support, min_conf=confidence, min_lift=lift,max_length=rules,sort_by=Sort_by)
     sup=rules['support']
     conf=rules['confidence']
-    lif=rules['lift']
+    lift=rules['lift']
     print(rules["support"])
     print(rules["confidence"])
     print(rules["lift"])
@@ -214,15 +213,12 @@ def update_graph(nclick,confidence,support,lift,rules,Consequent,Sort_by):
                          
                          mode='markers',
                          marker=dict(
-                                 color=lif,showscale=True,colorbar=dict(title='Lift'))
+                                 color=lift,showscale=True,colorbar=dict(title='Lift'))
 
                                 )
                         ],
                 
-                'layout': go.Layout(
-                        title ='Scatterplot of Confidence vs Support for custom rules'
-                        
-                        )
+                'layout': go.Layout(title="Scatterplot of Confidence(x) VS Support(y)")
                 }
     )
                     ])
