@@ -16,7 +16,7 @@ from mlxtend.preprocessing import TransactionEncoder
 import plotly.graph_objs as go
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
-empData = pd.read_csv('C:/Users/Aneesh/Documents/'df4.csv')
+empData = pd.read_csv(r'C:\Users\Aneesh\Documents\df4.csv')
 colnames = ['antecedents', 'consequents', 'antecedent support',
        'consequent support', 'support', 'confidence', 'lift', 'leverage',
        'conviction']
