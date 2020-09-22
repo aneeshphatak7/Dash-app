@@ -16,7 +16,7 @@ from mlxtend.preprocessing import TransactionEncoder
 import plotly.graph_objs as go
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 url = 'https://github.com/aneeshphatak7/Dash-app/blob/master/df4.csv'
-empData = pd.read_csv(url,sep=",")
+empData = pd.read_csv(url,sep=",",error_bad_lines=False)
 colnames = ['antecedents', 'consequents', 'antecedent support',
        'consequent support', 'support', 'confidence', 'lift', 'leverage',
        'conviction']
