@@ -50,8 +50,6 @@ server = app.server
 
 app.layout = html.Div(children=[
     html.H1('Employee Attrition: Association Rules Mining',style=dict(color='Orange',align='center',justify='center')),
-     html.Br([]),
-     html.Br([]),
 
    html.Div([ html.Div(children='''
         Min_Confidence:     
